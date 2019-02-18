@@ -1,7 +1,10 @@
 import os
 import shutil
-
-StartDirectory = "C:\\Users\\User\\PycharmProjects\Test"
+#для GUI надо чекбоксы: залезать в подкаталоги
+#радиобаттоны: копировать/перемещать файлы
+# opendirectory enddirectory
+# эдит для ввода перебираемых расширений и кнопка чтоб все запустить как минимум
+StartDirectory = "C:\с телефона"
 DestinationDirectory = "C:\\Users\\User\PycharmProjects\Destination"
 
 #files = [f for f in os.listdir(StartDirectory) код на случай если не требуется заглядывать в подкаталоги
@@ -9,13 +12,15 @@ DestinationDirectory = "C:\\Users\\User\PycharmProjects\Destination"
 
 
 
-AllDerectPng = []#получаем полный путь всех элементов заданного типа в указанном каталоге и подкаталогах
+#получаем полный путь всех элементов заданного типа в указанном каталоге и подкаталогах
+AllUsedNames = []
 for d, dirs, files in os.walk(StartDirectory):
     for f in files:
-        if f.endswith('.txt'):
-            path = os.path.join(d,f) # формирование адреса
+        if f.endswith('.jpg'):
+            path = os.path.join(d,f) # формирование начального адреса
+            for Elem in AllUsedNames:
+                 if (Elem == f):#проверяем, не использовалось ли это имя ранее, чтобы не потерять файл
+                    f = f.replace('.jpg','(1).jpg')
             dest = os.path.join(DestinationDirectory,f)
             shutil.move(path,dest)
-            AllDerectPng.append(path) # добавление адреса в список
-
-#print(files)
+            AllUsedNames.append(f) # запомниаем сохранённые имена
